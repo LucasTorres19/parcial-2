@@ -289,13 +289,36 @@ int filtrarTipo(Servicio* this,int tipo){
 
 	if(this != NULL){
 
-			printf("hola1");
 		if(this->tipo == tipo){
-			printf("hola");
 			retorno = 1;
 		}
 	}
 
 	return retorno;
+}
+
+int sortDescripcion(void* servicio1 ,void* servicio2){
+
+	int retorno = 0;
+
+	char descripcion1[50],descripcion2[50];
+
+	if(servicio1 != NULL && servicio2 !=NULL){
+
+		//obtenemos los datos.
+		if(
+			Servicio_getDescripcion(servicio1,descripcion1) == 0 &&
+			Servicio_getDescripcion(servicio2,descripcion2) == 0
+		){
+
+			retorno = strcmp(descripcion1,descripcion2);
+		}
+
+
+	}
+
+	return retorno;
+
+
 }
 

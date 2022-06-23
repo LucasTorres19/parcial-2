@@ -6,6 +6,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "LinkedList.h"
 #include "controller.h"
 #include "eServicios.h"
@@ -23,11 +24,10 @@ int controller_CargarArchivo(char* path, LinkedList* pArrayServicios){
     //verificamos que se haya abierto correctamente.
     if(pFile == NULL){
         printf("Ocurrio un error al abrir el archivo\n");
-        printf("%d",errno);
     }
     else{
         //parseamos los datos.
-        if(parser_PassengerFromText(pFile,pArrayServicios) == 1){
+        if(parser_ServicioFromText(pFile,pArrayServicios) == 1){
             retorno = 1;
         }
 
@@ -83,20 +83,91 @@ int controller_FiltrarPorTipo(LinkedList* pArrayServicios){
 	int retorno = 0;
     int tipoElejido;
     LinkedList* listaNueva = NULL;
+	char path[50];
 
 	if(pArrayServicios != NULL){
 
         //pedir el filtro al usuario.
         getInt(&tipoElejido,"Ingrese que tipo quiere usar para crear el archivo(1-MINORISTA, 2-MAYORISTA, 3-EXPORTAR):\n","error:ingrese nuevamente el tipo(1-MINORISTA, 2-MAYORISTA, 3-EXPORTAR):\n",1,3);
 
-        listaNueva =ll_filter(listaNueva,tipoElejido,filtrarTipo);
-    
+        listaNueva = ll_newLinkedList();
+
         if(listaNueva != NULL){
 
-            printf("creada con exito");
+            listaNueva = ll_filter(pArrayServicios,tipoElejido,filtrarTipo);
+
+            if(listaNueva != NULL){
+
+            	//obtenemos el path segun el tipo elejido.
+            	switch(tipoElejido){
+            	case 1:
+            		strcpy(path,"minorista.csv");
+            		break;
+            	case 2:
+            		strcpy(path,"mayorista.csv");
+            		break;
+            	case 3:
+            		strcpy(path,"exportar.csv");
+            		break;
+            	}
+
+            	//guardamos en el archivo.
+            	GuardarEnArchivo(path,listaNueva);
+
+                printf("Datos guardados con exito.\n");
+                retorno = 1;
+
+            }
+    	}
+
         }
-	}
 
 	return retorno;
 }
 
+int controller_ordenarLista(LinkedList* pArrayServicios){
+
+	int retorno = 0;
+	int largoLista = ll_len(pArrayServicios);
+	Servicio* servicio;
+
+	if(pArrayServicios != NULL){
+
+		//ordenamos la lista.
+
+		ll_sort(pArrayServicios,sortDescripcion,1);
+
+		//mostramos la lista.
+		printf("lista ordenada:\n");
+
+		 for(int i = 0;i < largoLista;i++){
+
+		            servicio = (Servicio*) ll_get(pArrayServicios,i);
+
+		            Servicio_print(servicio);
+		        }
+
+	    printf("\n");
+	}
+
+	return retorno;
+
+}
+
+int controller_GuardarServicios(char* path,LinkedList* pArrayServicios){
+
+	int retorno = 0;
+
+	if(pArrayServicios != NULL){
+
+		if(GuardarEnArchivo(path,pArrayServicios) == 1){
+
+			printf("Guardado con exito. \n");
+			retorno = 1;
+		}
+
+	}
+
+	return retorno;
+
+}

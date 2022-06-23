@@ -36,4 +36,20 @@ int controller_asignarTotales(LinkedList* pArrayServicios);
  *
  */
 int controller_FiltrarPorTipo(LinkedList* pArrayServicios);
+
+/** \brief ordena asendentemente la lista pasada por parametro.
+ * \param pArrayServicios LinkedList*.
+ * \return int
+ *
+ */
+int controller_ordenarLista(LinkedList* pArrayServicios);
+
+/** \brief guarda la lista ordenada.
+ * \param pArrayServicios LinkedList*.
+ * \param char* path
+ * \return int
+ */
+
+int controller_GuardarServicios(char* path,LinkedList* pArrayServicios);
+
 #endif /* CONTROLLER_H_ */

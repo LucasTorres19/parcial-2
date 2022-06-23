@@ -31,8 +31,8 @@ int main(void) {
 					   "1.imprimir  lista\n"
 						"2.Asignar Totales\n"
 						"3.Filtrar por tipo\n"
-						"4.Mostrar servicios\n"
-						"5.Guardar servicios\n"
+						"4.Ordenar y mostrar servicios\n"
+						"5.Guardar servicios Ordenados\n"
 						"6.Salir\n"
 
 				);
@@ -53,10 +53,10 @@ int main(void) {
 						controller_FiltrarPorTipo(listaServicios);
 						break;
 					case 4:
-
+						controller_ordenarLista(listaServicios);
 						break;
 					case 5:
-
+						controller_GuardarServicios("dataOrdenada.csv",listaServicios);
 						break;
 					case 6:
 						option = 7;

@@ -653,12 +653,15 @@ int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order)
 
 LinkedList* ll_map(LinkedList* this ,void*(pFunc)(void* element)){
 
-	int largoLista = ll_len(this);
+	int largoLista = ll_len(this); //obtenemos el largo de la lista.
 
+	//verificamos que la lista o la funcion no sean null.
 	if(this != NULL && pFunc != NULL){
 
+		//recorremos la lista.
 		for(int i=0;i<largoLista;i++){
 
+			//aplicamos la funcion.
 			pFunc(ll_get(this,i));
 
 		}
@@ -670,22 +673,28 @@ LinkedList* ll_map(LinkedList* this ,void*(pFunc)(void* element)){
 
 LinkedList* ll_filter (LinkedList* this,int tipoElejido ,int (*pFunc) (void* element,int tipo)){
 
+	//variables.
 	LinkedList* listaFiltrada = NULL;
 	int LargoLista = ll_len(this);
 	void* Elemento = NULL;
 
+	//verificamos que la lista o la funcion no sean null.
 	if(this != NULL && pFunc != NULL){
 
+		//inicializamos la linkedlist
 		listaFiltrada = ll_newLinkedList();
 
 		if(listaFiltrada != NULL){
 
+			//recorremos la lista pasada por parametros.
 			for(int i = 0;i < LargoLista;i++){
 				
+				//obtemos un elemento.
 				Elemento = ll_get(this,i);
 				
+				//verificamos que cumpla con el filtro pasado por parametro.
 				if(pFunc(Elemento,tipoElejido) == 1){
-					ll_add(listaFiltrada,Elemento);
+					ll_add(listaFiltrada,Elemento); //se agrega a la nueva lista.
 				}
 			}
 		} 

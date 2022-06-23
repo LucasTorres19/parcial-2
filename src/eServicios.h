@@ -96,4 +96,13 @@ void* obtenerTotal(Servicio* this);
 
 int filtrarTipo(Servicio* this,int tipo);
 
+/** \brief sortDescripcion
+ * devuelve comparacion de descripciones es mayor o menor.
+ * \param void* servicio1
+ * \param void* servicio2
+ * \return int
+ *
+ */
+
+int sortDescripcion(void* servicio1 ,void* servicio2);
 #endif /* ESERVICIOS_H_ */
